@@ -1,0 +1,110 @@
+[gd_scene load_steps=13 format=3 uid="uid://bqcjeyo0eaue"]
+
+[ext_resource type="PackedScene" uid="uid://dldl58x3ojo26" path="res://models/sun.glb" id="1_5xdcp"]
+[ext_resource type="Script" path="res://scripts/sun.gd" id="2_xop5c"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s7wdm"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_y0lmm"]
+sky_material = SubResource("ProceduralSkyMaterial_s7wdm")
+
+[sub_resource type="Environment" id="Environment_p4pki"]
+sky = SubResource("Sky_y0lmm")
+ambient_light_source = 1
+tonemap_mode = 2
+glow_enabled = true
+adjustment_enabled = true
+adjustment_brightness = 1.5
+adjustment_saturation = 1.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l7juy"]
+radius = 20.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ngq5y"]
+size = Vector2(30, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkl8r"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ub1t6"]
+radius = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_jefwy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0gru"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yuhn0"]
+
+[node name="Node2D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p4pki")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.61977, 0)
+projection = 1
+size = 20.0
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, -1.27569e-14, 1.42109e-14, -1.27569e-14, 1, -7.10543e-15, 1.42109e-14, -7.10543e-15, 1, 0, 0, 0)
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 30.0
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 0.05
+linear_damp_space_override = 3
+linear_damp = 0.0
+angular_damp_space_override = 3
+angular_damp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_l7juy")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.06861, 0)
+mesh = SubResource("PlaneMesh_ngq5y")
+material = SubResource("StandardMaterial3D_wkl8r")
+
+[node name="SUN" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SUN"]
+transform = Transform3D(0.966399, -0.257048, 1.50996e-07, -0.257048, -0.966398, -8.44852e-08, 1.67639e-07, 4.28332e-08, -1, 0, 0, 0)
+shape = SubResource("SphereShape3D_ub1t6")
+
+[node name="sun" parent="SUN" instance=ExtResource("1_5xdcp")]
+transform = Transform3D(0.966399, -0.257048, 1.50996e-07, -0.257048, -0.966398, -8.44852e-08, 1.67639e-07, 4.28332e-08, -1, 0, 0, 0)
+script = ExtResource("2_xop5c")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SUN/sun"]
+light_color = Color(0.952941, 0.494118, 0.278431, 1)
+omni_range = 28.6991
+
+[node name="GiantSpaceCrab" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12969, 0, 0)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+linear_velocity = Vector3(0, 0, 3)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GiantSpaceCrab"]
+mesh = SubResource("BoxMesh_jefwy")
+material = SubResource("StandardMaterial3D_a0gru")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GiantSpaceCrab"]
+shape = SubResource("BoxShape3D_yuhn0")
+
+[node name="GiantSpaceCrab2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6582, 0, 0)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+linear_velocity = Vector3(0, 0, 3)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GiantSpaceCrab2"]
+mesh = SubResource("BoxMesh_jefwy")
+material = SubResource("StandardMaterial3D_a0gru")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GiantSpaceCrab2"]
+shape = SubResource("BoxShape3D_yuhn0")
