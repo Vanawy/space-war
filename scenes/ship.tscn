@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2bqyu3ua72pj"]
+
+[ext_resource type="PackedScene" uid="uid://bpnawl2dnlq24" path="res://models/ship.glb" id="1_oe7pi"]
+[ext_resource type="Script" path="res://scripts/ship_controller.gd" id="2_4c1j0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yuhn0"]
+size = Vector3(0.552979, 0.337646, 0.498291)
+
+[node name="Ship" type="RigidBody3D"]
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+
+[node name="ship" parent="." instance=ExtResource("1_oe7pi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_yuhn0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.08, 0.417333, 1, 1)
+light_energy = 4.532
+omni_range = 3.38479
+omni_attenuation = 3.818
+
+[node name="ShipController" type="Node3D" parent="." node_paths=PackedStringArray("controlled_body")]
+script = ExtResource("2_4c1j0")
+controlled_body = NodePath("..")

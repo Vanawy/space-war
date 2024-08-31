@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bqcjeyo0eaue"]
+[gd_scene load_steps=14 format=3 uid="uid://bqcjeyo0eaue"]
 
 [ext_resource type="PackedScene" uid="uid://dldl58x3ojo26" path="res://models/sun.glb" id="1_5xdcp"]
 [ext_resource type="Script" path="res://scripts/sun.gd" id="2_xop5c"]
-[ext_resource type="PackedScene" uid="uid://bpnawl2dnlq24" path="res://models/ship.glb" id="3_lndyr"]
-[ext_resource type="Script" path="res://scripts/ship_controller.gd" id="4_8kybp"]
+[ext_resource type="PackedScene" uid="uid://b2bqyu3ua72pj" path="res://scenes/ship.tscn" id="3_krtiq"]
+[ext_resource type="Script" path="res://scripts/player_input_handler.gd" id="4_8p4aa"]
+[ext_resource type="Script" path="res://scripts/wrapping_area.gd" id="5_c70ph"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s7wdm"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,12 +33,8 @@ radius = 20.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_ub1t6"]
 radius = 1.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_jefwy"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0gru"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_yuhn0"]
-size = Vector3(0.552979, 1, 0.498291)
+[sub_resource type="BoxShape3D" id="BoxShape3D_mqnmb"]
+size = Vector3(26, 1, 20)
 
 [node name="Node2D" type="Node3D"]
 
@@ -50,7 +47,7 @@ mesh = SubResource("PlaneMesh_ngq5y")
 material = SubResource("StandardMaterial3D_wkl8r")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.61977, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
 projection = 1
 size = 20.0
 
@@ -60,7 +57,7 @@ gravity_space_override = 3
 gravity_point = true
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
-gravity = 1.0
+gravity = 0.2
 linear_damp_space_override = 3
 linear_damp = 0.0
 angular_damp_space_override = 3
@@ -83,38 +80,17 @@ script = ExtResource("2_xop5c")
 light_color = Color(0.952941, 0.494118, 0.278431, 1)
 omni_range = 28.6991
 
-[node name="GiantSpaceCrab" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12969, 0, 0)
-axis_lock_linear_y = true
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-linear_velocity = Vector3(0, 0, 3)
+[node name="Ship" parent="." instance=ExtResource("3_krtiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="GiantSpaceCrab"]
-mesh = SubResource("BoxMesh_jefwy")
-material = SubResource("StandardMaterial3D_a0gru")
+[node name="PlayerInputShipHandler" type="Node3D" parent="Ship" node_paths=PackedStringArray("ship")]
+script = ExtResource("4_8p4aa")
+ship = NodePath("../ShipController")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GiantSpaceCrab"]
-shape = SubResource("BoxShape3D_yuhn0")
+[node name="WrappingArea" type="Area3D" parent="."]
+script = ExtResource("5_c70ph")
 
-[node name="GiantSpaceCrab2" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6582, 0, 0)
-axis_lock_linear_y = true
-axis_lock_angular_x = true
-axis_lock_angular_z = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WrappingArea"]
+shape = SubResource("BoxShape3D_mqnmb")
 
-[node name="ship" parent="GiantSpaceCrab2" instance=ExtResource("3_lndyr")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GiantSpaceCrab2"]
-shape = SubResource("BoxShape3D_yuhn0")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="GiantSpaceCrab2"]
-light_color = Color(0.08, 0.417333, 1, 1)
-light_energy = 4.532
-omni_range = 3.38479
-omni_attenuation = 3.818
-
-[node name="ShipController" type="Node3D" parent="GiantSpaceCrab2" node_paths=PackedStringArray("controlled_body")]
-script = ExtResource("4_8kybp")
-controlled_body = NodePath("..")
+[editable path="Ship"]

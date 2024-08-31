@@ -1,4 +1,5 @@
 extends Node3D
+class_name ShipController
 
 @export var controlled_body: RigidBody3D
 
@@ -7,10 +8,6 @@ var in_rotation: float = 0.0
 
 const THRUST_FORCE: float = 3.0
 const RCS_FORCE: float = 0.2
-
-func _process(delta: float) -> void:
-	in_acceleration = Input.get_axis("ui_down", "ui_up")
-	in_rotation = Input.get_axis("ui_right", "ui_left")
 	
 func _physics_process(delta: float) -> void:
 	var forward := -global_transform.basis.z
