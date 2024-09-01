@@ -1,0 +1,155 @@
+[gd_scene load_steps=23 format=3 uid="uid://xsqdg85qhf2i"]
+
+[ext_resource type="Script" path="res://scripts/rocket_controller.gd" id="1_lny7j"]
+[ext_resource type="PackedScene" uid="uid://7d4wahh1vcy1" path="res://scenes/explosion_emitter.tscn" id="2_o57ni"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fklic"]
+size = Vector3(0.1, 0.1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lv1n7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pkjaw"]
+material = SubResource("StandardMaterial3D_lv1n7")
+size = Vector3(0.1, 0.1, 0.5)
+
+[sub_resource type="Curve" id="Curve_0ovmy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rxhm7"]
+curve = SubResource("Curve_0ovmy")
+
+[sub_resource type="Curve" id="Curve_mjyg8"]
+_data = [Vector2(0, 0.22), 0.0, 0.0, 0, 0, Vector2(0.197952, 0.533793), 1.12581, 1.12581, 0, 0, Vector2(0.542662, 0.524828), -0.875632, -0.875632, 0, 0, Vector2(1, 0), 0.0, 1.4, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7781x"]
+curve = SubResource("Curve_mjyg8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6cuit"]
+lifetime_randomness = 0.1
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 0.1
+emission_ring_inner_radius = 0.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_7781x")
+alpha_curve = SubResource("CurveTexture_rxhm7")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bftyk"]
+load_path = "res://.godot/imported/magic_04.png-f15918973f5216fa107b863aeeb0982c.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ihorr"]
+load_path = "res://.godot/imported/magic_05.png-6086502bf1e337936bba7885465f1f4f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7r27w"]
+transparency = 1
+albedo_color = Color(0.26, 0.617666, 1, 1)
+albedo_texture = SubResource("CompressedTexture2D_bftyk")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.5
+emission_texture = SubResource("CompressedTexture2D_ihorr")
+
+[sub_resource type="QuadMesh" id="QuadMesh_milw1"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_7r27w")
+center_offset = Vector3(0, 0, -0.305)
+orientation = 1
+
+[sub_resource type="Curve" id="Curve_ayaqk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_p0yex"]
+curve = SubResource("Curve_ayaqk")
+
+[sub_resource type="Curve" id="Curve_epmwl"]
+_data = [Vector2(0.01, 1), 0.0, 0.0, 0, 0, Vector2(0.215017, 1), -0.286902, -0.286902, 0, 0, Vector2(1, 1), 0.0, 1.4, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_clb06"]
+curve = SubResource("Curve_epmwl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a2uy2"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 0.02
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_clb06")
+alpha_curve = SubResource("CurveTexture_p0yex")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i4iox"]
+load_path = "res://.godot/imported/muzzle_01.png-ae2c73e8e1bad50817941fd239fc865d.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io5tj"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.330333, 0.02, 1)
+albedo_texture = SubResource("CompressedTexture2D_i4iox")
+
+[sub_resource type="QuadMesh" id="QuadMesh_r4khk"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_io5tj")
+size = Vector2(0.6, 0.6)
+center_offset = Vector3(0, 0, -0.085)
+orientation = 1
+
+[node name="Rocket" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 7
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+contact_monitor = true
+max_contacts_reported = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fklic")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_pkjaw")
+
+[node name="TrailEmitter" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.09065, 0.247068)
+amount = 256
+process_material = SubResource("ParticleProcessMaterial_6cuit")
+draw_pass_1 = SubResource("QuadMesh_milw1")
+
+[node name="RocketController" type="Node3D" parent="." node_paths=PackedStringArray("controlled_body", "engine_timer", "explosion_timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.208618)
+script = ExtResource("1_lny7j")
+controlled_body = NodePath("..")
+engine_timer = NodePath("../EngineTimer")
+explosion_timer = NodePath("../ExplosionTimer")
+
+[node name="ThrustEmitter" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0.35)
+amount = 2
+lifetime = 0.02
+process_material = SubResource("ParticleProcessMaterial_a2uy2")
+draw_pass_1 = SubResource("QuadMesh_r4khk")
+
+[node name="EngineTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+autostart = true
+
+[node name="ExplosionTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
+[node name="ExplosionEmitter" parent="." instance=ExtResource("2_o57ni")]

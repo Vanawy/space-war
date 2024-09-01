@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://m7kxmavqguwy"]
+
+[ext_resource type="PackedScene" uid="uid://b2bqyu3ua72pj" path="res://scenes/ship_base.tscn" id="1_n4yha"]
+[ext_resource type="PackedScene" uid="uid://bpnawl2dnlq24" path="res://models/ship.glb" id="2_e2vw1"]
+
+[node name="Ship" instance=ExtResource("1_n4yha")]
+
+[node name="ship2" parent="." index="0" instance=ExtResource("2_e2vw1")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, 0)

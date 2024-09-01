@@ -6,9 +6,9 @@ The game was initially controlled via switches on the computer, but a student at
 
 Goal:
 
-☐ Create two different ships. One player will control each ship. Ships can rotate and thrust. Thrusting will accelerate the ship “forward” in the direction that it is facing.
-☐ Add the ability for ships to fire torpedoes. The player ship will fire in the direction that it is facing. Torpedoes will disappear after a short while.
-☐ Enable collisions. If two players collide, both lose. If a torpedo hits a player, the other player wins. If two torpedoes collide, both are destroyed.
+✔ Create two different ships. One player will control each ship. Ships can rotate and thrust. Thrusting will accelerate the ship “forward” in the direction that it is facing. @done(24-09-01 16:17)
+✔ Add the ability for ships to fire torpedoes. The player ship will fire in the direction that it is facing. Torpedoes will disappear after a short while. @done(24-09-01 15:51)
+✔ Enable collisions. If two players collide, both lose. If a torpedo hits a player, the other player wins. If two torpedoes collide, both are destroyed. @done(24-09-01 15:51)
 ✔ Enable screen wrapping. (Objects leaving the top of the screen should enter the bottom, for example) @done(24-08-31 12:18)
 ✔ Add a star at the center of the screen. Apply gravity (everything will slowly fall towards the star) @done(24-08-30 21:56)
 ☐ Add sound effects and particles!
