@@ -1,7 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://xsqdg85qhf2i"]
+[gd_scene load_steps=25 format=3 uid="uid://xsqdg85qhf2i"]
 
 [ext_resource type="Script" path="res://scripts/rocket_controller.gd" id="1_lny7j"]
 [ext_resource type="PackedScene" uid="uid://7d4wahh1vcy1" path="res://scenes/explosion_emitter.tscn" id="2_o57ni"]
+[ext_resource type="AudioStream" uid="uid://7axkfnbg7wbs" path="res://assets/zapsplat/engine.wav" id="2_pqbfp"]
+[ext_resource type="Script" path="res://scripts/engine_sound.gd" id="3_yqyaq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fklic"]
 size = Vector3(0.1, 0.1, 0.5)
@@ -141,6 +143,18 @@ amount = 2
 lifetime = 0.02
 process_material = SubResource("ParticleProcessMaterial_a2uy2")
 draw_pass_1 = SubResource("QuadMesh_r4khk")
+
+[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="ThrustEmitter" node_paths=PackedStringArray("emitter")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.0176168, 0.0142913, 0.0388355)
+stream = ExtResource("2_pqbfp")
+volume_db = 3.0
+unit_size = 1.0
+pitch_scale = 1.87
+autoplay = true
+bus = &"Engines"
+doppler_tracking = 2
+script = ExtResource("3_yqyaq")
+emitter = NodePath("..")
 
 [node name="EngineTimer" type="Timer" parent="."]
 wait_time = 0.7

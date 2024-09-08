@@ -19,11 +19,15 @@ var active_thrust_force: float = 0
 @export var rcs_ccw_emitter: GPUParticles3D
 @export var explosion_emotter: GPUParticles3D
 
+
+#@export var engine_sfx: AudioStreamPlayer3D
+
 var is_dead: bool = false
 
 signal died
 
 func _ready() -> void:
+	#engine_sfx.play(randf() * 3)
 	controlled_body.body_entered.connect(func(body: Node) -> void:
 		_explode()
 	)
@@ -31,6 +35,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_apply_forces()
 	_update_emitters()
+	#_update_sound()
 	
 func _explode() -> void:
 	if is_dead:
@@ -58,7 +63,26 @@ func _apply_forces() -> void:
 		controlled_body.apply_central_force(forward * active_thrust_force)
 		controlled_body.apply_torque(Vector3.UP * active_rcs_force)
 	
-	
+#func _update_sound() -> void:
+	#engine_sfx.stream_paused = true
+	#if is_dead:
+		#return
+		#
+	#var size: float = 0
+	#
+	#
+	#if backwards_emitter.emitting:
+		#size += 3
+	#if forwards_emitter.emitting:
+		#size += 1
+	#if rcs_ccw_emitter.emitting:
+		#size += 1
+	#if rcs_cw_emitter.emitting:
+		#size += 1
+		#
+	#if size > 0:
+		#engine_sfx.stream_paused = false
+		#engine_sfx.unit_size = size
 	
 func _update_emitters() -> void:
 	backwards_emitter.emitting = false

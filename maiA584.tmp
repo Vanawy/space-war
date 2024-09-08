@@ -1,21 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bop3g38r0nct6"]
+[gd_scene load_steps=6 format=3 uid="uid://bop3g38r0nct6"]
 
 [ext_resource type="PackedScene" uid="uid://bqcjeyo0eaue" path="res://level.tscn" id="1_clkyy"]
 [ext_resource type="Texture2D" uid="uid://8ky3pbfbfemh" path="res://assets/kenney/crosshair_pack/crosshair043.png" id="2_8g7xi"]
 [ext_resource type="Texture2D" uid="uid://rws4etgs10o6" path="res://assets/kenney/crosshair_pack/crosshair001.png" id="3_grqh6"]
 [ext_resource type="Script" path="res://scripts/copy_position.gd" id="3_otjky"]
 [ext_resource type="Texture2D" uid="uid://cqx233tlotus2" path="res://assets/kenney/crosshair_pack/crosshair002.png" id="4_t6ikg"]
-[ext_resource type="AudioStream" uid="uid://b6sog316mrm4l" path="res://assets/zapsplat/music/music_pioxonaq_agressive_lightning.mp3" id="6_x8kl8"]
-[ext_resource type="AudioStream" uid="uid://bhvfd78qk4vcf" path="res://assets/zapsplat/music/music_zapsplat_aiming_high.mp3" id="7_8bgfk"]
-[ext_resource type="AudioStream" uid="uid://dnpkt0bvpjco1" path="res://assets/zapsplat/music/music_zapsplat_rapid_turnaround.mp3" id="8_awbxw"]
-[ext_resource type="AudioStream" uid="uid://cs2rrow1o7ufo" path="res://assets/zapsplat/music/music_zapsplat_slow_rider.mp3" id="9_6oct3"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ay6la"]
-streams_count = 4
-stream_0/stream = ExtResource("6_x8kl8")
-stream_1/stream = ExtResource("7_8bgfk")
-stream_2/stream = ExtResource("8_awbxw")
-stream_3/stream = ExtResource("9_6oct3")
 
 [node name="main" type="Node2D"]
 
@@ -94,11 +83,6 @@ viewport = NodePath("../../../../SubViewportContainer/SubViewport")
 view_camera = NodePath("../../../../SubViewportContainer/SubViewport/Level/Camera3D")
 point1 = NodePath("../PredictionPoint1")
 point2 = NodePath("../PredictionPoint2")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_ay6la")
-autoplay = true
-bus = &"Music"
 
 [editable path="SubViewportContainer/SubViewport/Level"]
 [editable path="SubViewportContainer/SubViewport/Level/ShipBLUE"]
