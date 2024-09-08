@@ -1,120 +1,89 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqcjeyo0eaue"]
+[gd_scene load_steps=6 format=3 uid="uid://bop3g38r0nct6"]
 
-[ext_resource type="PackedScene" uid="uid://dldl58x3ojo26" path="res://models/sun.glb" id="1_5xdcp"]
-[ext_resource type="Script" path="res://scripts/sun.gd" id="2_xop5c"]
-[ext_resource type="Script" path="res://scripts/player_input_handler.gd" id="4_8p4aa"]
-[ext_resource type="PackedScene" uid="uid://m7kxmavqguwy" path="res://scenes/ship_blue.tscn" id="5_2x4h2"]
-[ext_resource type="Script" path="res://scripts/wrapping_area.gd" id="5_c70ph"]
-[ext_resource type="PackedScene" uid="uid://chqrgnktclvny" path="res://scenes/ship_red.tscn" id="6_ea5gk"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="7_2eshh"]
+[ext_resource type="PackedScene" uid="uid://bqcjeyo0eaue" path="res://level.tscn" id="1_clkyy"]
+[ext_resource type="Texture2D" uid="uid://8ky3pbfbfemh" path="res://assets/kenney/crosshair_pack/crosshair043.png" id="2_8g7xi"]
+[ext_resource type="Texture2D" uid="uid://rws4etgs10o6" path="res://assets/kenney/crosshair_pack/crosshair001.png" id="3_grqh6"]
+[ext_resource type="Script" path="res://scripts/copy_position.gd" id="3_otjky"]
+[ext_resource type="Texture2D" uid="uid://cqx233tlotus2" path="res://assets/kenney/crosshair_pack/crosshair002.png" id="4_t6ikg"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s7wdm"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[node name="main" type="Node2D"]
 
-[sub_resource type="Sky" id="Sky_y0lmm"]
-sky_material = SubResource("ProceduralSkyMaterial_s7wdm")
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 320.0
+offset_bottom = 240.0
+scale = Vector2(4, 4)
 
-[sub_resource type="Environment" id="Environment_p4pki"]
-sky = SubResource("Sky_y0lmm")
-ambient_light_source = 1
-tonemap_mode = 2
-glow_enabled = true
-adjustment_enabled = true
-adjustment_brightness = 1.5
-adjustment_saturation = 1.3
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 240)
+size_2d_override = Vector2i(320, 240)
+size_2d_override_stretch = true
+render_target_update_mode = 4
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ngq5y"]
-size = Vector2(30, 30)
+[node name="Level" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_clkyy")]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkl8r"]
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_l7juy"]
-radius = 20.0
+[node name="UI2" type="CanvasLayer" parent="."]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ub1t6"]
-radius = 1.0
+[node name="UI" type="Control" parent="UI2"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mqnmb"]
-size = Vector3(26, 1, 20)
+[node name="BlueShip" type="Sprite2D" parent="UI2/UI"]
+modulate = Color(1, 0, 0.0166664, 1)
+position = Vector2(397, 480)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_8g7xi")
 
-[node name="Node2D" type="Node3D"]
+[node name="PredictionPoint1" type="Sprite2D" parent="UI2/UI/BlueShip"]
+position = Vector2(115.714, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("3_grqh6")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_p4pki")
+[node name="PredictionPoint2" type="Sprite2D" parent="UI2/UI/BlueShip"]
+position = Vector2(180, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("4_t6ikg")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.06861, 0)
-mesh = SubResource("PlaneMesh_ngq5y")
-material = SubResource("StandardMaterial3D_wkl8r")
+[node name="CopyPosition" type="Node2D" parent="UI2/UI/BlueShip" node_paths=PackedStringArray("from", "to", "viewport", "view_camera", "point1", "point2")]
+script = ExtResource("3_otjky")
+from = NodePath("../../../../SubViewportContainer/SubViewport/Level/ShipBLUE")
+to = NodePath("..")
+viewport = NodePath("../../../../SubViewportContainer/SubViewport")
+view_camera = NodePath("../../../../SubViewportContainer/SubViewport/Level/Camera3D")
+point1 = NodePath("../PredictionPoint1")
+point2 = NodePath("../PredictionPoint2")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
-projection = 1
-size = 20.0
+[node name="RedShip2" type="Sprite2D" parent="UI2/UI"]
+modulate = Color(0, 0.183333, 1, 1)
+position = Vector2(882, 480)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_8g7xi")
 
-[node name="GravitationalField" type="Area3D" parent="."]
-transform = Transform3D(1, -1.27569e-14, 1.42109e-14, -1.27569e-14, 1, -7.10543e-15, 1.42109e-14, -7.10543e-15, 1, 0, 0, 0)
-collision_mask = 7
-gravity_space_override = 3
-gravity_point = true
-gravity_point_center = Vector3(0, 0, 0)
-gravity_direction = Vector3(0, 0, 0)
-gravity = 0.4
-linear_damp_space_override = 3
-linear_damp = 0.0
-angular_damp_space_override = 3
-angular_damp = 0.0
+[node name="PredictionPoint1" type="Sprite2D" parent="UI2/UI/RedShip2"]
+position = Vector2(115.714, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("3_grqh6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GravitationalField"]
-shape = SubResource("SphereShape3D_l7juy")
+[node name="PredictionPoint2" type="Sprite2D" parent="UI2/UI/RedShip2"]
+position = Vector2(180, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("4_t6ikg")
 
-[node name="SUN" type="StaticBody3D" parent="."]
-collision_mask = 6
+[node name="CopyPosition" type="Node2D" parent="UI2/UI/RedShip2" node_paths=PackedStringArray("from", "to", "viewport", "view_camera", "point1", "point2")]
+script = ExtResource("3_otjky")
+from = NodePath("../../../../SubViewportContainer/SubViewport/Level/ShipRED")
+to = NodePath("..")
+viewport = NodePath("../../../../SubViewportContainer/SubViewport")
+view_camera = NodePath("../../../../SubViewportContainer/SubViewport/Level/Camera3D")
+point1 = NodePath("../PredictionPoint1")
+point2 = NodePath("../PredictionPoint2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SUN"]
-transform = Transform3D(0.966399, -0.257048, 1.50996e-07, -0.257048, -0.966398, -8.44852e-08, 1.67639e-07, 4.28332e-08, -1, 0, 0, 0)
-shape = SubResource("SphereShape3D_ub1t6")
-
-[node name="sun" parent="SUN" instance=ExtResource("1_5xdcp")]
-transform = Transform3D(0.966399, -0.257048, 1.50996e-07, -0.257048, -0.966398, -8.44852e-08, 1.67639e-07, 4.28332e-08, -1, 0, 0, 0)
-script = ExtResource("2_xop5c")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SUN/sun"]
-light_color = Color(0.952941, 0.494118, 0.278431, 1)
-omni_range = 28.6991
-
-[node name="WrappingArea" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 6
-script = ExtResource("5_c70ph")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WrappingArea"]
-shape = SubResource("BoxShape3D_mqnmb")
-
-[node name="ShipBLUE" parent="." instance=ExtResource("5_2x4h2")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, 0)
-
-[node name="PlayerInputShipHandler2" type="Node3D" parent="ShipBLUE" node_paths=PackedStringArray("ship", "rocket")]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0, 0)
-script = ExtResource("4_8p4aa")
-ship = NodePath("../ShipController")
-rocket = NodePath("../RocketSpawner")
-
-[node name="ShipRED" parent="." instance=ExtResource("6_ea5gk")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0)
-
-[node name="PlayerInputShipHandler" type="Node3D" parent="ShipRED" node_paths=PackedStringArray("ship", "rocket")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.37114e-07, 0, -10)
-script = ExtResource("4_8p4aa")
-ship = NodePath("../ShipController")
-rocket = NodePath("../RocketSpawner")
-prefix = "p2_"
-
-[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("player_blue", "player_red")]
-script = ExtResource("7_2eshh")
-player_blue = NodePath("../ShipBLUE/ShipController")
-player_red = NodePath("../ShipRED/ShipController")
-
-[editable path="ShipBLUE"]
-[editable path="ShipRED"]
+[editable path="SubViewportContainer/SubViewport/Level"]
+[editable path="SubViewportContainer/SubViewport/Level/ShipBLUE"]
+[editable path="SubViewportContainer/SubViewport/Level/ShipRED"]

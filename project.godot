@@ -26,10 +26,9 @@ gdscript/warnings/unsafe_cast=1
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
+window/size/viewport_width=1280
+window/size/viewport_height=960
 window/stretch/mode="viewport"
-window/stretch/scale=2.0
 window/stretch/scale_mode="integer"
 
 [file_customization]
@@ -104,3 +103,7 @@ p2_fire={
 2d/run_on_separate_thread=true
 3d/default_gravity=0.0
 common/physics_interpolation=true
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

@@ -9,5 +9,5 @@ func _process(delta: float) -> void:
 	ship.in_acceleration = Input.get_axis(prefix + "down", prefix + "up")
 	ship.in_rotation = Input.get_axis(prefix + "right", prefix + "left")
 	
-	if Input.is_action_just_pressed(prefix + "fire"):
+	if not ship.is_dead && Input.is_action_just_pressed(prefix + "fire"):
 		rocket.fire()

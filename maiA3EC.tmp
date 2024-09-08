@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bop3g38r0nct6"]
+
+[ext_resource type="PackedScene" uid="uid://bqcjeyo0eaue" path="res://level.tscn" id="1_clkyy"]
+[ext_resource type="Texture2D" uid="uid://c1e2au12xnnyg" path="res://assets/kenney/crosshair_pack/crosshair025.png" id="2_r0c7e"]
+[ext_resource type="Texture2D" uid="uid://rws4etgs10o6" path="res://assets/kenney/crosshair_pack/crosshair001.png" id="3_grqh6"]
+[ext_resource type="Script" path="res://scripts/copy_position.gd" id="3_otjky"]
+[ext_resource type="Texture2D" uid="uid://cqx233tlotus2" path="res://assets/kenney/crosshair_pack/crosshair002.png" id="4_t6ikg"]
+
+[node name="main" type="Node2D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 320.0
+offset_bottom = 240.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 240)
+size_2d_override = Vector2i(320, 240)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Level" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_clkyy")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="UI2" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UI2"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BlueShip" type="Sprite2D" parent="UI2/UI"]
+modulate = Color(1, 0, 0.0166664, 1)
+position = Vector2(397, 480)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_r0c7e")
+
+[node name="PredictionPoint1" type="Sprite2D" parent="UI2/UI/BlueShip"]
+position = Vector2(115.714, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("3_grqh6")
+
+[node name="PredictionPoint2" type="Sprite2D" parent="UI2/UI/BlueShip"]
+position = Vector2(180, 0)
+scale = Vector2(1, 1)
+texture = ExtResource("4_t6ikg")
+
+[node name="CopyPosition" type="Node2D" parent="UI2/UI/BlueShip" node_paths=PackedStringArray("from", "to", "viewport", "view_camera")]
+script = ExtResource("3_otjky")
+from = NodePath("../../../../SubViewportContainer/SubViewport/Level/ShipBLUE")
+to = NodePath("..")
+viewport = NodePath("../../../../SubViewportContainer/SubViewport")
+view_camera = NodePath("../../../../SubViewportContainer/SubViewport/Level/Camera3D")
+
+[editable path="SubViewportContainer/SubViewport/Level"]
+[editable path="SubViewportContainer/SubViewport/Level/ShipBLUE"]
+[editable path="SubViewportContainer/SubViewport/Level/ShipRED"]

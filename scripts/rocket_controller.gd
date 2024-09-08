@@ -11,6 +11,8 @@ const THRUST_FORCE: float = 3.0
 @onready var trail_emitter: GPUParticles3D = $"../TrailEmitter"
 @onready var explosion_emitter: GPUParticles3D = $"../ExplosionEmitter"
 
+var keep_position: Vector3 = Vector3.ZERO
+
 var engine_on: bool = true
 
 func _ready() -> void:
@@ -22,6 +24,8 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	_apply_forces()
+	if keep_position != Vector3.ZERO:
+		controlled_body.global_position = keep_position
 	
 func _apply_forces() -> void:
 	if engine_on:
@@ -34,9 +38,10 @@ func _disable_engine() -> void:
 
 func _explode() -> void:
 	_disable_engine()
-	#$"../CollisionShape3D".disabled = true
-	$"../MeshInstance3D".visible = false
 	controlled_body.collision_mask = 0
+	$"../CollisionShape3D".set_deferred("disabled", true)
+	$"../MeshInstance3D".visible = false
+	keep_position = controlled_body.global_position
 	explosion_emitter.emitting = true
 	trail_emitter.emitting = false
 	await explosion_emitter.finished
